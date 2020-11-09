@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<style>
+.divBlock {
+	background: linear-gradient(blue 50%, yellow 50%);
+	width: 170px;
+	height: 300px;
+	padding: 10px;
+	float: right;
+	margin-top: -338px;
+}
+
+.divBlock input {
+	margin: 5px;
+}
+
+#golovnu {
+	width: 450px;
+	height: 330px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -225px;
+	margin-top: -165px;
+}
+
+#one {
+	float: none;
+	margin-top: 0px;
+}
+</style>
+</head>
+<body>
+	<div id="golovnu">
+	<p id="message"></p>
+		<div class="divBlock" id="one">
+			<h3>Send by GET</h3>
+			<form action="/" method="get" id="form">
+				<label>firstName<br> <input type="text" id="userNameGet"></label><br>
+				<label>secondName<br> <input type="text" id="userSNameGet"></label><br>
+				<label>age<br> <input type="number" id="userAgeGet"></label><br>
+				<label>residence<br> <input type="text" id="userResidenceGet"></label><br>
+				<input type="button"value="Send by Get" onclick="sendDataByGetMethod()">
+			</form>
+		</div>
+		<br>
+		<div class="divBlock">
+			<h3>Send by POST</h3>
+			<form>
+				<label>firstName<br> <input type="text" id="userNamePost"></label><br>
+				<label>secondName<br> <input type="text" id="userSNamePost"></label><br>
+				<label>age<br> <input type="number" id="userAgePost"></label><br>
+				<label>residence<br> <input type="text"id="userResidencePost"></label><br>
+				<input type="button" value="Send by Post" onclick="sendDataByPostMethod()">
+			</form>
+		</div>
+	</div>
+	
+	<script>
+	function sendDataByGetMethod(){
+		let userData = {
+				userName:$("#userNameGet").val(),
+				userSName:$('#userSNameGet').val(),
+				userAge:$('#userAgeGet').val(),
+				userResidence:$('#userResidenceGet').val()
+		};
+		
+		let name = $('#userNameGet').val();
+		let sName = $('#userSNameGet').val();
+		let residence = $('#userResidenceGet').val();
+		let age = $('#userAgeGet').val();
+		
+		
+		
+		if( age < 1 || age > 100){
+			throw 'Wrong Age';
+		}
+		if(name == null || name.length <= 1){
+			throw'Wrong Name';
+		}
+		if(sName == null || sName.length <= 1){
+			throw'Wrong Second Name';
+		}
+		if(residence == null || residence.length <= 1){
+			throw'residence not valid';
+		}
+		
+		
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("Get","/userGet?userName=" + userData.userName
+				+"&userSName="+userData.userSName
+				+"&userAge="+userData.userAge
+				+"&userResidence="+userData.userResidence);
+		
+		xhr.setRequestHeader("Content-type","application/json");
+		xhr.send();
+	}
+
+	function sendDataByPostMethod(){
+		let userData = {
+				userName:$('#userNamePost').val(),
+				userSName:$('#userSNamePost').val(),
+				userAge:$('#userAgePost').val(), 
+				userResidents:$('#userResidencePost').val()
+		};
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open("Post","/userPost");
+		xhr.setRequestHeader("Content-type","application/json");
+		xhr.send(JSON.stringify(userData));
+	}
+	</script>
+</body>
+</html>
