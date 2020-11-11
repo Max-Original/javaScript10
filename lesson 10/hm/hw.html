@@ -92,10 +92,10 @@
 		
 		
 		let xhr = new XMLHttpRequest();
-		xhr.open("Get","/userGet?userName=" + userData.userName
-				+"&userSName="+userData.userSName
-				+"&userAge="+userData.userAge
-				+"&userResidence="+userData.userResidence);
+		xhr.open("Get","/userGet?userName=" + $(userData).attr(userName)
+				+"&userSName="+$(userData).attr(userSName)
+				+"&userAge="+$(userData).attr(userAge)
+				+"&userResidence="+$(userData).attr(userResidence);
 		
 		xhr.setRequestHeader("Content-type","application/json");
 		xhr.send();
