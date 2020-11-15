@@ -89,16 +89,17 @@
 			throw'residence not valid';
 		}
 		
-		
-		
-		let xhr = new XMLHttpRequest();
-		xhr.open("Get","/userGet?userName=" + $(userData).attr(userName)
+				
+		$.ajax({
+		url:"Get","/userGet" + $(userData).attr(userName)
 				+"&userSName="+$(userData).attr(userSName)
 				+"&userAge="+$(userData).attr(userAge)
-				+"&userResidence="+$(userData).attr(userResidence);
+				+"&userResidence="+$(userData).attr(userResidence),	
+		dataType:'json',
+		data:data,
+		success: callback
 		
-		xhr.setRequestHeader("Content-type","application/json");
-		xhr.send();
+		});
 	}
 
 	function sendDataByPostMethod(){
@@ -109,10 +110,12 @@
 				userResidents:$('#userResidencePost').val()
 		};
 		
-		let xhr = new XMLHttpRequest();
-		xhr.open("Post","/userPost");
-		xhr.setRequestHeader("Content-type","application/json");
-		xhr.send(JSON.stringify(userData));
+		
+	$.post("/userPost" , function(data) {
+		$(".result").html(data);
+	});	
+		
+		
 	}
 	</script>
 </body>
